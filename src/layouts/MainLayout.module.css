@@ -8,31 +8,51 @@
 .header {
   background: #202123;
   color: #fff;
-  padding: 1rem;
-  font-size: 1.2rem;
+  padding: 2px;
+  padding-right: 30px;
+  font-size: .5rem;
+  text-align: right;
 }
 
 .body {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  justify-content: space-between;
+  flex-grow: 1;
   height: 100%;
   background-color: violet;
 }
 
+
+
 .sidebar {
-  background: #ffffff;
+  background: blue;
   border-radius: 8px;
   padding: 1rem;
   border: 1px solid #e5e7eb;
+  transition: width 0.3s ease;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
+.sidebar.collapsed {
+  width: 60px;
+  padding: 0.5rem;
+  align-items: center; /* ✅ Centra el botón */
+}
+
+.sidebar.collapsed p {
+  display: none; /* ✅ Oculta el texto */
+}
+
+
+
+
 .content {
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid #e5e7eb;
-  overflow-y: auto;
+  background: red;
+  flex-grow: 1;
 }
 
 .footer {

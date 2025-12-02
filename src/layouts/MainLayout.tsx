@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import {
   layout,
   header,
@@ -9,18 +11,28 @@ import {
 
 type MainLayoutProps = {
   children: React.ReactNode;
-  showSidebar?: boolean;
   title?: string;
 };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
-  showSidebar = true,
   title = "BarbarIAn",
 }) => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setCollapsed((prev) => !prev);
+  };
+
   return (
     <div className={layout}>
-      {showSidebar && <aside className={sidebar}>Sidebar</aside>}
+      <aside className={`${sidebar} ${collapsed ? "collapsed" : ""}`}>
+        <button onClick={handleToggleSidebar}>
+          {collapsed ? "Abrir" : "Cerrar"}
+        </button>
+        {!collapsed && <p>Aún no tienes chats</p>}
+      </aside>
+
       <div className={body}>
         <header className={header}>
           <h1>{title}</h1>
