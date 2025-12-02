@@ -1,0 +1,1 @@
+//# Estado global si lo necesitas
