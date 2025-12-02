@@ -1,1 +1,0 @@
-//# Header del chat (nombre, avatar)
