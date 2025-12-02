@@ -21,6 +21,17 @@ export default defineConfig({
 				type: "asset"
 			},
 			{
+				test: /\.module\.css$/,
+				use: [
+					{
+						loader: "builtin:lightningcss-loader",
+						options: {
+							cssModules: true
+						}
+					}
+				]
+			},
+			{
 				test: /\.(jsx?|tsx?)$/,
 				use: [
 					{

@@ -21,14 +21,18 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   const [collapsed, setCollapsed] = useState(false);
 
   const handleToggleSidebar = () => {
-    setCollapsed((prev) => !prev);
+    setCollapsed((prev) => {
+      const newCollapsed = !prev;
+      console.log('Sidebar collapsed state:', newCollapsed);
+      return newCollapsed;
+    });
   };
 
   return (
     <div className={layout}>
       <aside className={`${sidebar} ${collapsed ? "collapsed" : ""}`}>
         <button onClick={handleToggleSidebar}>
-          {collapsed ? "Abrir" : "Cerrar"}
+          {collapsed ? ">" : "X"}
         </button>
         {!collapsed && <p>Aún no tienes chats</p>}
       </aside>
