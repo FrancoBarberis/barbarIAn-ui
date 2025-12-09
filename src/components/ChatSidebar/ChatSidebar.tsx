@@ -13,28 +13,38 @@ const ChatSidebar: React.FC = () => {
         className={styles.toggleSidebar}
         onClick={() => setCollapsed((prev) => !prev)}
       >
-        {collapsed ? "Abrir" : "X"}
+        {collapsed ? ">" : "X"}
       </button>
-      <ul className={styles.messageList}>
-        <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
-        <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
-        <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
-        <li>Mensaje3sadsadasdasdasdsadasdasdasdas</li>
-        <li>Mensaje4</li>
-        <li>Mensaje5</li>
-        <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
-        <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
-        <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
-        <li>Mensaje3sadsadasdasdasdsadasdasdasdas</li>
-        <li>Mensaje4</li>
-        <li>Mensaje5</li>
-        <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
-        <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
-        <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
-        <li>Mensaje3sadsadasdasdasdsadasdasdasdas</li>
-        <li>Mensaje4</li>
-        <li>Mensaje5</li>
-      </ul>
+      <div className={clsx(styles.messageList, { [styles.hidden]: collapsed })}>
+        <p className={styles.message}>PRIMERO</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</p>
+        <p className={styles.message}>ULTIMO</p>
+        
+      </div>
       <UserProfile />
     </div>
   );
