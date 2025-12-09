@@ -3,6 +3,7 @@
     min-height: 70px;
     display: flex;
     justify-content: center;
+    color: white;
 }
 
 .inputField{
@@ -13,6 +14,8 @@
     border: none;
     padding-left: 15px;
     font-size: 16px;
+    background-color: rgb(159, 36, 36);
+    color:white;
 }
 
 .sendButton{
@@ -22,7 +25,7 @@
     margin-left: 10px;
     border-radius: 2px;
     border: none;
-    background-color: #007bff;
+    background-color: rgb(159, 36, 36);
     color: white;
     font-size: 16px;
     cursor: pointer;

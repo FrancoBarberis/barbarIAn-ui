@@ -1,4 +1,5 @@
 import styles from "./UserProfile.module.css";
+import clsx from "clsx";
 
 const UserProfile : React.FC = () => {
   return (
