@@ -6,16 +6,28 @@ import clsx from "clsx";
 const ChatSidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <div className={clsx(
-      styles.chatSidebar,
-      { [styles.collapsed]: collapsed }
-    )}
+    <div
+      className={clsx(styles.chatSidebar, { [styles.collapsed]: collapsed })}
     >
-      <button className={styles.toggleSidebar} onClick={() => setCollapsed(prev => !prev)}>{collapsed ? ">" : "X"}</button>
-      <ul className={clsx(
-        styles.messageList,
-        { [styles.hidden]: collapsed }
-      )}>
+      <button
+        className={styles.toggleSidebar}
+        onClick={() => setCollapsed((prev) => !prev)}
+      >
+        {collapsed ? "Abrir" : "X"}
+      </button>
+      <ul className={styles.messageList}>
+        <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
+        <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
+        <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
+        <li>Mensaje3sadsadasdasdasdsadasdasdasdas</li>
+        <li>Mensaje4</li>
+        <li>Mensaje5</li>
+        <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
+        <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
+        <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
+        <li>Mensaje3sadsadasdasdasdsadasdasdasdas</li>
+        <li>Mensaje4</li>
+        <li>Mensaje5</li>
         <li className={styles.message}>Mensaje1sadasdasdasdsadsadasdasdasd</li>
         <li>Mensaje2dsadasdasdsadasdsdsadsadsadsadsds</li>
         <li>Mensaje1dsadsadsadsadsadsadsadsadsadsad</li>
