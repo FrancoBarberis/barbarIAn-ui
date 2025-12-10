@@ -12,3 +12,15 @@
   height: 100%;          /* o una altura fija: 100vh, 600px, etc. */
   /* Si el padre no define altura, usá algo como: min-height: 0; en el padre flex */
 }
+
+.chatWindow::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chatWindow::-webkit-scrollbar-track {
+    background-color: black;
+}
+
+.chatWindow::-webkit-scrollbar-thumb {
+    background-color: #c73838;
+}

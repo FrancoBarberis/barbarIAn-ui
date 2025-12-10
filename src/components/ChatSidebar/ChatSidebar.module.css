@@ -1,3 +1,4 @@
+
 .chatSidebar {
     display: flex;
     flex-direction: column;
@@ -66,24 +67,17 @@
 
 /* 
 TODO: Fix ellipsis */
+
 .message {
-  margin: 0;
-  cursor: pointer;
-  height: 50px;
+  display: flex;            /* para alinear título y preview */
+  flex-direction: column;   /* título arriba, preview abajo */
+  justify-content: center;  /* centra verticalmente */
   width: 90%;
-  padding-inline: 10px;
-  padding-block: 20px;
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  color: white;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
+  height: 60px;             /* altura fija */
+  padding: 7px 5px;
+  box-sizing: border-box;    /* incluye padding en el alto */
+  cursor: pointer;
 }
-
-
 
 .message:hover{
     background-color: #c73838;

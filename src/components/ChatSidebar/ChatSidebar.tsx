@@ -30,17 +30,19 @@ const ChatSidebar: React.FC = () => {
         {chats.map((chat) => {
           const isActive = chat.id === selectedChatId;
           return (
-            <button
-              key={chat.id}
-              type="button"
-              className={clsx(
-                styles.message,            // tu estilo base (lo mantenemos)
-                { [styles.active]: isActive } // resaltar el activo
-              )}
+
+            <div
+              role="button"
+              tabIndex={0}
+              className={clsx(styles.message, { [styles.active]: isActive })}
               onClick={() => selectChat(chat.id)}
-              title={chat.title}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") selectChat(chat.id);
+              }}
             >
-            </button>
+              <div className={styles.messageTitle}>{chat.title}</div>
+            </div>
+
           );
         })}
 
