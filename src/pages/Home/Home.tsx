@@ -17,7 +17,8 @@ const Home: React.FC = () => {
   };
   return (
     <div className={styles.container}>
-      <ChatSidebar />
+      {/* TODO: Render del chat log en sidebar */}
+      <ChatSidebar /> 
       <div className={styles.chatArea}>
         <ChatWindow messagesList={messages} />
         <InputBox onSendMessage={onSendMessage} />

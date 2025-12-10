@@ -12,12 +12,34 @@ export default function ChatWindow({ messagesList }: ChatWindowProps) {
 
   return (
     <div className={styles.chatWindow}>
-      {messages.map((msg, index) => (
-        <div key={index}>
-          {/* TODO: RENDERIZAR A IZQUIERDA PARA ASSISTANT, DERECHA PARA USER */}
-          <Message text={msg.text} role={msg.role} />
-        </div>
-      ))}
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
+      <Message text="asistente" role="assistant"/>
+      <Message text="usuario" role="user"/>
     </div>
   );
 }

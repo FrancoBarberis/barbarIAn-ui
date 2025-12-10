@@ -1,0 +1,15 @@
+.message{
+    padding: 10px 20px;
+    max-width: 35%;
+    border-radius: 10px;
+}
+
+.assistant{
+    background-color: blue;
+    align-self: flex-start;
+}
+
+.user{
+    background-color: green;
+    align-self: flex-end;
+}
