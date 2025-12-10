@@ -9,6 +9,7 @@ import type { Message as MessageType } from "../../types/messageType";
 const Home: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const onSendMessage = (message: MessageType) => {
+    console.log(message);
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: message.text, role: message.role },
