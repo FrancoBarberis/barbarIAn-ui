@@ -10,7 +10,7 @@
     width: 280px;
     height: 100%;
     transition: all .7s;
-    border-right: 7px solid black;
+    border-right: 7px solid var(--border-color);
 }
 
 
@@ -84,14 +84,15 @@
 
 .chatList::-webkit-scrollbar {
     width: 10px;
+    transition: all .1s;
 }
 
 .chatList::-webkit-scrollbar-track {
-    background-color: black;
+    background-color: var(--border-color);
 }
 
 .chatList::-webkit-scrollbar-thumb {
-    background-color: #c73838;
+    background-color: #969647;
 }
 
 /* 
@@ -99,8 +100,9 @@ TODO: Fix ellipsis */
 
 .chat {
   display: flex;            /* para alinear título y preview */
-  flex-direction: column;   /* título arriba, preview abajo */
-  justify-content: center;  /* centra verticalmente */
+  flex-direction: row;   /* título arriba, preview abajo */
+  justify-content: space-around;  
+  align-items: center;
   width: 90%;
   height: 60px;             /* altura fija */
   box-sizing: border-box;    /* incluye padding en el alto */
@@ -111,9 +113,19 @@ TODO: Fix ellipsis */
 }
 
 
+.title{
+    justify-self: start;
+}
+
+.chatControl{
+    background-color: transparent;
+    cursor:pointer;
+    pointer-events: all;
+}
+
 /* CREAR OVERLAY QUE PONGA UN COLOR DE CONTRASTE */
 .chat:hover{ 
-    background-color:#c73838;
+    background-color:#599ba8;
 }
 
 .chat.active:hover{

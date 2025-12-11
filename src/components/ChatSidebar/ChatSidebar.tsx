@@ -40,6 +40,8 @@ const ChatSidebar: React.FC = () => {
               }}
             >
               <div className={styles.messageTitle}>{chat.title}</div>
+              <div ><button className={clsx(styles.chatControl)} onClick={() => console.log("E")}>E</button></div>
+              <div><button className={clsx(styles.chatControl)} onClick={() => console.log("D")}>D</button></div>
             </div>
 
           );
