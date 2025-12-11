@@ -6,10 +6,10 @@
 
 .assistant{
     background-color: blue;
-    align-self: flex-start;
+    align-self: flex-end;
 }
 
 .user{
     background-color: green;
-    align-self: flex-end;
+    align-self: flex-start;
 }

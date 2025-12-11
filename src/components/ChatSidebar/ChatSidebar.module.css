@@ -1,14 +1,16 @@
-
 .chatSidebar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    background-color: rgb(159, 36, 36);
+    background-color: #3C6F79;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x:center;
     width: 280px;
     height: 100%;
     transition: all .7s;
-    border-color: black;
+    border-right: 7px solid black;
 }
 
 
@@ -26,14 +28,13 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: yellow;
 }
 
 .collapsed {
-    background-color: rgb(213, 26, 26);
+    background-color: #3C6F79;
     justify-content: center;
     align-items: center;
-    width: 50px;
+    width: 100px;
 }
 
 .hidden{

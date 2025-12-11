@@ -1,22 +1,31 @@
 
 import styles from "./ChatSidebar.module.css";
 import UserProfile from "../UserProfile/UserProfile";
-import { useState } from "react";
 import { useChatStore } from "../../store/chatStore";
+import { useUIStore } from "../../store/uiStore";
 import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ChatSidebar: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(true); // se mantiene local
-
+  const collapsed = useUIStore((s) => s.collapsed)
+  const changeCollapsed = useUIStore((s) => s.changeCollapsed);
   const chats = useChatStore((s) => s.chats);
   const selectedChatId = useChatStore((s) => s.selectedChatId);
   const selectChat = useChatStore((s) => s.selectChat);
   const createChat = useChatStore((s) => s.createChat);
 
   return (
-    <aside className={clsx(styles.chatSidebar, { [styles.collapsed]: collapsed} )} onMouseEnter={() => setCollapsed((prev) => (!prev))} onMouseLeave={() => setCollapsed((prev) => (!prev))}>
-      <button className={clsx(styles.newChat, {[styles.hidden]:collapsed})} onClick={() => createChat("Nuevo chat")}>+</button>
-      <div className={clsx(styles.chatList, { [styles.hidden]: collapsed , [styles.centered]:chats.length==0})}>
+    <aside className={clsx(styles.chatSidebar, collapsed && styles.collapsed)} onMouseEnter={changeCollapsed} onMouseLeave={changeCollapsed}>
+      <button className={clsx(styles.newChat, collapsed && styles.hidden)} onClick={() => createChat("Nuevo chat")}>+</button>
+
+      <div
+        className={clsx(
+          styles.chatList,
+          collapsed && styles.hidden,
+          chats.length === 0 && styles.centered
+        )}
+      >
+
         {/* Lista de chats */}
         {chats.map((chat) => {
           const isActive = chat.id === selectedChatId;
@@ -24,7 +33,7 @@ const ChatSidebar: React.FC = () => {
             <div
               role="button"
               tabIndex={0}
-              className={clsx(styles.chat, { [styles.active]: isActive })}
+              className={clsx(styles.chat, isActive && styles.active)}
               onClick={() => selectChat(chat.id)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") selectChat(chat.id);

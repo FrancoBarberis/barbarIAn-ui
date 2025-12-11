@@ -2,6 +2,9 @@
     height: 100vh;
     margin: 0;
     padding: 0;
+
+    /* VARIABLES */
+    --border-color: #332407;
 }
 
 body, #root,html {

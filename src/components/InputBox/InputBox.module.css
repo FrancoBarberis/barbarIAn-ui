@@ -1,11 +1,13 @@
 .inputBox{
-    background-color: black;
+    background-color: #803707;
     height: 13vh;
     min-height: 13vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     color: white;
     padding-inline: 2vw;
+    border-top: 7px solid black;
 }
 
 .inputField{

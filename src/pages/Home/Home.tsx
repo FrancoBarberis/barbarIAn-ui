@@ -6,6 +6,7 @@ import ChatWindow from "../../components/ChatWindow/ChatWindow";
 import ChatSidebar from "../../components/ChatSidebar/ChatSidebar";
 import InputBox from "../../components/InputBox/InputBox";
 import { useChatStore } from "../../store/chatStore";
+import AgentPreview from "../../components/AgentPreview/AgentPreview";
 
 const Home: React.FC = () => {
   // Selectores del store (Zustand)
@@ -32,6 +33,7 @@ const Home: React.FC = () => {
         <ChatWindow messagesList={messagesList} />
         <InputBox onSendMessage={onSendMessage} />
       </div>
+      <AgentPreview/>
     </div>
   );
 };
