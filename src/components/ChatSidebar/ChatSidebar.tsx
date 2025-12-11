@@ -6,7 +6,7 @@ import { useChatStore } from "../../store/chatStore";
 import clsx from "clsx";
 
 const ChatSidebar: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false); // se mantiene local
+  const [collapsed, setCollapsed] = useState(true); // se mantiene local
 
   const chats = useChatStore((s) => s.chats);
   const selectedChatId = useChatStore((s) => s.selectedChatId);
@@ -14,27 +14,17 @@ const ChatSidebar: React.FC = () => {
   const createChat = useChatStore((s) => s.createChat);
 
   return (
-    <aside className={clsx(styles.chatSidebar, { [styles.collapsed]: collapsed })}>
-      <button
-        className={styles.toggleSidebar}
-        onClick={() => setCollapsed((prev) => !prev)}
-        aria-label={collapsed ? "Expandir sidebar" : "Colapsar sidebar"}
-      >
-        {collapsed ? ">" : "X"}
-      </button>
-
-      <div className={clsx(styles.messageList, { [styles.hidden]: collapsed })}>
-        <button className={styles.newChat} onClick={() => createChat("Nuevo chat")}>+ Nuevo chat</button>
-
+    <aside className={clsx(styles.chatSidebar, { [styles.collapsed]: collapsed} )} onMouseEnter={() => setCollapsed((prev) => (!prev))} onMouseLeave={() => setCollapsed((prev) => (!prev))}>
+      <button className={clsx(styles.newChat, {[styles.hidden]:collapsed})} onClick={() => createChat("Nuevo chat")}>+</button>
+      <div className={clsx(styles.chatList, { [styles.hidden]: collapsed , [styles.centered]:chats.length==0})}>
         {/* Lista de chats */}
         {chats.map((chat) => {
           const isActive = chat.id === selectedChatId;
           return (
-
             <div
               role="button"
               tabIndex={0}
-              className={clsx(styles.message, { [styles.active]: isActive })}
+              className={clsx(styles.chat, { [styles.active]: isActive })}
               onClick={() => selectChat(chat.id)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") selectChat(chat.id);

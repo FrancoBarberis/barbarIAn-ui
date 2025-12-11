@@ -12,9 +12,9 @@ type ChatState = {
   getSelectedChat: () => Chat | null;
 };
 
+
+//INICIALIZO LOS CHATS EN VACIO
 const initialChats: Chat[] = [
-  { id: "chat-1", title: "General", messages: [] },
-  { id: "chat-2", title: "Soporte", messages: [] },
 ];
 
 export const useChatStore = create<ChatState>((set, get) => ({

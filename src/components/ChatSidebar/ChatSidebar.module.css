@@ -7,33 +7,62 @@
     background-color: rgb(159, 36, 36);
     width: 280px;
     height: 100%;
-    transition: all .5s;
+    transition: all .7s;
     border-color: black;
 }
 
+
+.newChat{
+    background-color: rgb(162, 42, 42);
+    color: white;
+    cursor: pointer;
+    width: fit-content;
+    height: fit-content;
+    align-self: center;
+    margin-top: 30px;
+}
+
+.centered{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: yellow;
+}
+
 .collapsed {
-    background-color: rgb(122, 15, 15);
+    background-color: rgb(213, 26, 26);
+    justify-content: center;
+    align-items: center;
     width: 50px;
 }
 
 .hidden{
-    pointer-events: none;
-    display: none;
     opacity: 0;
+    transition: all .3s;
+}
+
+.active{
+    background-color: green;
 }
 
 .toggleSidebar {
-    background-color: transparent;
-    border: none;
-    color: white;
     font-size: 20px;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
+    background-color: #c73838;
 }
 
-.messageList {
+.toggleCollapsed{
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    
+}
+
+.chatList {
     margin: 0;
     padding: 0;
     margin-top: 10vh;
@@ -44,41 +73,49 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: 10px;
     list-style: none;
     overflow-y: auto;
     padding-right: 20px;
     overflow-x: hidden;
-    transition: all ease-in-out .3s;
+    transition: all ease-in-out 1s;
     padding-left: 15px;
 }
 
-.messageList::-webkit-scrollbar {
+.chatList::-webkit-scrollbar {
     width: 10px;
 }
 
-.messageList::-webkit-scrollbar-track {
+.chatList::-webkit-scrollbar-track {
     background-color: black;
 }
 
-.messageList::-webkit-scrollbar-thumb {
+.chatList::-webkit-scrollbar-thumb {
     background-color: #c73838;
 }
 
 /* 
 TODO: Fix ellipsis */
 
-.message {
+.chat {
   display: flex;            /* para alinear título y preview */
   flex-direction: column;   /* título arriba, preview abajo */
   justify-content: center;  /* centra verticalmente */
   width: 90%;
   height: 60px;             /* altura fija */
-  padding: 7px 5px;
   box-sizing: border-box;    /* incluye padding en el alto */
   cursor: pointer;
+  padding-block: 10px;
+  padding-left: 10px;
+  transition: all ease-in-out .3s;
 }
 
-.message:hover{
-    background-color: #c73838;
+
+/* CREAR OVERLAY QUE PONGA UN COLOR DE CONTRASTE */
+.chat:hover{ 
+    background-color:#c73838;
+}
+
+.chat.active:hover{
+    filter: brightness(1.3);
+    background-color: green;
 }
