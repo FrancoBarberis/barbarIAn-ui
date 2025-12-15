@@ -1,16 +1,16 @@
-
 /* ChatWindow.module.css */
 .chatWindow {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-inline: 12vw;
-  padding-top: 3vh;
-  background-color: #414131;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-inline: 5%;
+    padding-top: 3vh;
+    background-color: #414131;
 
-  /* ¡Clave para que scrollIntoView tenga efecto! */
-  overflow-y: auto;
-  height: 100%;          /* o una altura fija: 100vh, 600px, etc. */
+    /* ¡Clave para que scrollIntoView tenga efecto! */
+    overflow-y: auto;
+    height: 100%;
+    /* o una altura fija: 100vh, 600px, etc. */
 }
 
 .chatWindow::-webkit-scrollbar {

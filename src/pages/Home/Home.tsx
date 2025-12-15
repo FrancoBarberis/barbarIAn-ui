@@ -1,4 +1,3 @@
-
 // Home.tsx
 import React from "react";
 import styles from "./Home.module.css";
@@ -31,9 +30,9 @@ const Home: React.FC = () => {
       <div className={styles.chatArea}>
         {/* Mantener props si tu UI depende de eso */}
         <ChatWindow messagesList={messagesList} />
-        <InputBox onSendMessage={onSendMessage} />
+        <InputBox />
       </div>
-      <AgentPreview/>
+      <AgentPreview />
     </div>
   );
 };
