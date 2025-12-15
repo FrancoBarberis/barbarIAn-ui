@@ -4,25 +4,29 @@ import UserProfile from "../UserProfile/UserProfile";
 import { useChatStore } from "../../store/chatStore";
 import { useUIStore } from "../../store/uiStore";
 import clsx from "clsx";
-import { motion, AnimatePresence } from "framer-motion";
 
-
-
-//TODO: Agregar funcionalidad de eliminar chat
 const ChatSidebar: React.FC = () => {
-  const collapsed = useUIStore((s) => s.collapsed)
-  const changeCollapsed = useUIStore((s) => s.changeCollapsed);
+  const collapsed = useUIStore((s) => s.collapsed);
+  const setCollapsed = useUIStore((s) => s.setCollapsed);
+
   const chats = useChatStore((s) => s.chats);
   const selectedChatId = useChatStore((s) => s.selectedChatId);
   const selectChat = useChatStore((s) => s.selectChat);
   const createChat = useChatStore((s) => s.createChat);
-
   const deleteChat = useChatStore((s) => s.deleteChat);
 
   return (
-    
-    <aside className={clsx(styles.chatSidebar, collapsed && styles.collapsed)} onMouseEnter={changeCollapsed} onMouseLeave={changeCollapsed}>
-      <button className={clsx(styles.newChat, collapsed && styles.hidden)} onClick={() => createChat("Nuevo chat")}>+</button>
+    <aside
+      className={clsx(styles.chatSidebar, collapsed && styles.collapsed)}
+      onMouseEnter={() => setCollapsed(false)}
+      onMouseLeave={() => setCollapsed(true)}
+    >
+      <button
+        className={clsx(styles.newChat, collapsed && styles.hidden)}
+        onClick={() => createChat("Nuevo chat")}
+      >
+        +
+      </button>
 
       <div
         className={clsx(
@@ -31,8 +35,6 @@ const ChatSidebar: React.FC = () => {
           chats.length === 0 && styles.centered
         )}
       >
-
-        {/* Lista de chats */}
         {chats.map((chat) => {
           const isActive = chat.id === selectedChatId;
           return (
@@ -47,16 +49,38 @@ const ChatSidebar: React.FC = () => {
               }}
             >
               <div className={styles.messageTitle}>{chat.title}</div>
-              <div ><button className={clsx(styles.chatControl)} onClick={() => console.log("E")}>E</button></div>
-              <div><button className={clsx(styles.chatControl)} onClick={() => deleteChat(chat.id)}>D</button></div>
-            </div>
 
+              {/* Importante: evitar que los botones internos disparen el onClick del contenedor */}
+              <div>
+                <button
+                  className={clsx(styles.chatControl)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("E");
+                  }}
+                >
+                  E
+                </button>
+              </div>
+              <div>
+                <button
+                  className={clsx(styles.chatControl)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // evita seleccionar el chat o afectar hover
+                    deleteChat(chat.id);
+                  }}
+                >
+                  D
+                </button>
+              </div>
+            </div>
           );
         })}
 
-        {/* Si la lista está vacía, un placeholder breve */}
         {chats.length === 0 && (
-          <p className={styles.message}>No hay chats. Creá uno para empezar.</p>
+          <p className={styles.message}>
+            No hay chats. Creá uno para empezar.
+          </p>
         )}
       </div>
       <UserProfile />
