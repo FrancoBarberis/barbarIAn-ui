@@ -10,7 +10,7 @@
     width: 280px;
     height: 100%;
     transition: all .7s;
-    border-right: 7px solid var(--border-color);
+    border-right: var(--border-width) solid var(--border-color);
 }
 
 

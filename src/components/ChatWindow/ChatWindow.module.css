@@ -6,7 +6,6 @@
     padding-inline: 5%;
     padding-top: 3vh;
     background-color: #414131;
-
     /* ¡Clave para que scrollIntoView tenga efecto! */
     overflow-y: auto;
     height: 100%;
