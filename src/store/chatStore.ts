@@ -31,8 +31,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
   sendMessage: (text, role = "user") => {
     const trimmed = text.trim();
-    const chatId = get().selectedChatId;
-    if (!trimmed || !chatId) return;
+    if (!trimmed) return;
+
+    let chatId = get().selectedChatId;
+
+    if (!chatId) {
+      chatId = get().createChat(trimmed.length > 20 ? trimmed.slice(0, 20) + "..." : trimmed);
+    }
 
     const newMsg: Message = {
       id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2),

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import styles from "./InputBox.module.css";
 import { useChatStore } from "../../store/chatStore";
@@ -23,7 +22,10 @@ const InputBox: React.FC = () => {
   return (
     <form
       className={styles.inputBox}
-      onSubmit={(e) => { e.preventDefault(); submit(); }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
     >
       <input
         ref={inputRef}
@@ -43,7 +45,7 @@ const InputBox: React.FC = () => {
       <button
         className={styles.sendButton}
         type="submit"
-        disabled={!message.trim() || !selectedChatId}
+        disabled={!message.trim()}
       >
         Send
       </button>
