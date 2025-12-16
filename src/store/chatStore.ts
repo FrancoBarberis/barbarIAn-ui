@@ -1,6 +1,8 @@
 
 import { create } from "zustand";
 import type { Chat, Message, Role } from "../types/messageType";
+import { useUIStore } from "./uiStore";
+import { use } from "react";
 
 type ChatState = {
   chats: Chat[];
@@ -15,10 +17,12 @@ type ChatState = {
 
 // INICIALIZO LOS CHATS EN VACÍO
 const initialChats: Chat[] = [];
+const setThinking = useUIStore.getState().setThinking;
 
 export const useChatStore = create<ChatState>((set, get) => ({
   chats: initialChats,
   selectedChatId: initialChats[0]?.id ?? null,
+  
 
   selectChat: (chatId) => set({ selectedChatId: chatId }),
 
@@ -52,6 +56,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
         c.id === chatId ? { ...c, messages: [...c.messages, newMsg] } : c
       ),
     }));
+
+    
   },
 
   getSelectedChat: () => {
