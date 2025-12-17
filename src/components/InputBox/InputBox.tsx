@@ -37,6 +37,7 @@ const InputBox: React.FC = () => {
       <input
         ref={inputRef}
         type="text"
+        name="message_input"
         placeholder="Type your message..."
         className={styles.inputField}
         value={message}
