@@ -2,8 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./InputBox.module.css";
 import { useChatStore } from "../../store/chatStore";
 import SendIcon from "../../assets/send.png";
+import clsx from "clsx";
 
 const InputBox: React.FC = () => {
+
+  const messagesList = useChatStore((s) => s.messagesList)
+  const noMessages = useChatStore((s)=> s.noMessages)
+
+
   const [message, setMessage] = useState("");
   const selectedChatId = useChatStore((s) => s.selectedChatId);
   const sendMessage = useChatStore((s) => s.sendMessage);
@@ -22,7 +28,7 @@ const InputBox: React.FC = () => {
 
   return (
     <form
-      className={styles.inputBox}
+      className={clsx(styles.inputBox, noMessages && styles.no__messages)}
       onSubmit={(e) => {
         e.preventDefault();
         submit();
