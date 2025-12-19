@@ -1,4 +1,3 @@
-
 import styles from "./ChatSidebar.module.css";
 import UserProfile from "../UserProfile/UserProfile";
 import { useChatStore } from "../../store/chatStore";
@@ -26,9 +25,7 @@ const ChatSidebar: React.FC = () => {
     >
       {collapsed ? (
         // Vista colapsada
-        <div className={styles.collapsedContent}>
-          {">"}
-        </div>
+        <div className={styles.collapsedContent}>{">"}</div>
       ) : (
         // Vista expandida
         <>
@@ -59,19 +56,22 @@ const ChatSidebar: React.FC = () => {
                   }}
                 >
                   <div className={styles.messageTitle}>{chat.title}</div>
-
-                  {/* Importante: evitar que los botones internos disparen el onClick del contenedor */}
                   <div className={styles.controlsWrapper}>
                     <button
                       className={styles.chatControl}
                       onClick={(e) => {
                         e.stopPropagation();
-                        const newTitle = prompt("Nuevo título:", chat.title) || chat.title;
+                        const newTitle =
+                          prompt("Nuevo título:", chat.title) || chat.title;
                         editChat(chat.id, newTitle);
                       }}
                       aria-label="Editar chat"
                     >
-                      <img src={editIcon} alt="pencil" className={styles.button__icon} />
+                      <img
+                        src={editIcon}
+                        alt="pencil"
+                        className={styles.button__icon}
+                      />
                     </button>
                   </div>
                   <div>
@@ -83,7 +83,11 @@ const ChatSidebar: React.FC = () => {
                       }}
                       aria-label="Eliminar chat"
                     >
-                      <img src={deleteIcon} alt="trash-bin" className={styles.button__icon} />
+                      <img
+                        src={deleteIcon}
+                        alt="trash-bin"
+                        className={styles.button__icon}
+                      />
                     </button>
                   </div>
                 </div>

@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: fixed;
-    background:linear-gradient(to bottom, #3C6F79, #803707);
+    background: linear-gradient(to bottom, #3C6F79, #803707);
     width: 240px;
     height: 100%;
     transition: all .3s;
@@ -14,7 +14,7 @@
     border-right: var(--border-width) solid var(--border-color);
 }
 
-.newChat{
+.newChat {
     background-color: #a7490b;
     color: black;
     cursor: pointer;
@@ -26,7 +26,7 @@
     font-size: 20px;
 }
 
-.centered{
+.centered {
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -40,7 +40,7 @@
     font-size: 30px;
 }
 
-.hidden{
+.hidden {
     opacity: 0;
     transition: all .3s;
 }
@@ -55,12 +55,12 @@
     background-color: #c73838;
 }
 
-.toggleCollapsed{
+.toggleCollapsed {
     width: 100%;
     height: 100%;
     align-self: center;
     justify-self: center;
-    
+
 }
 
 .chatList {
@@ -68,7 +68,7 @@
     padding: 0;
     margin-top: 10vh;
     gap: 2px;
-    height:85vh;
+    height: 85vh;
     width: 85%;
     background-color: transparent;
     display: flex;
@@ -100,67 +100,76 @@
 TODO: Fix ellipsis */
 
 .chat {
-  display: flex;            /* para alinear título y preview */
-  flex-direction: row;   /* título arriba, preview abajo */
-  justify-content: space-around;  
-  align-items: center;
-  width: 90%;
-  height: 60px;             /* altura fija */
-  box-sizing: border-box;    /* incluye padding en el alto */
-  cursor: pointer;
-  padding-block: 10px;
-  padding-left: 10px;
-  transition: all ease-in-out .3s;
-  pointer-events: all;
+    display: flex;
+    /* para alinear título y preview */
+    flex-direction: row;
+    /* título arriba, preview abajo */
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 60px;
+    /* altura fija */
+    box-sizing: border-box;
+    /* incluye padding en el alto */
+    cursor: pointer;
+    padding-block: 10px;
+    padding-left: 10px;
+    transition: all ease-in-out .3s;
+    pointer-events: all;
 }
 
 
-.title{
+.messageTitle {
     justify-self: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
 }
 
-.controlsWrapper{
+.controlsWrapper {
     display: flex;
     flex-direction: row;
-    gap: 2px;
+    justify-content: center;
+    width: 20%;
 }
 
-.chatControl{
+.chatControl {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    cursor:pointer;
+    cursor: pointer;
     opacity: 0;
     transition: all .3s;
     width: 30px;
     height: 30px;
 }
 
-.chat:hover .chatControl{
+.chat:hover .chatControl {
     opacity: 1;
 }
 
-.button__icon{
+.button__icon {
     height: 15px;
     width: 15px;
 }
 
-.chat:hover{ 
-    background-color:#599ba8;
+.chat:hover {
+    background-color: #599ba8;
 }
 
-.active{
+.active {
     background-color: #a75a28;
 }
 
-.active::before{
+.active::before {
     background-color: black;
     width: 3px;
     height: auto;
 }
 
-.chat.active:hover{
+.chat.active:hover {
     filter: brightness(1.3);
     background-color: #bb662e;
 }
