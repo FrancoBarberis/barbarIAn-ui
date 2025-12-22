@@ -26,6 +26,11 @@
     font-size: 20px;
 }
 
+.messageTitle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .centered{
     align-items: center;
     justify-content: center;
@@ -122,7 +127,7 @@ TODO: Fix ellipsis */
 .controlsWrapper{
     display: flex;
     flex-direction: row;
-    gap: 2px;
+    gap: 0px;
 }
 
 .chatControl{
