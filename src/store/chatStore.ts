@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import type { Chat, Message, Role } from "../types/messageType";
 import { useUIStore } from "./uiStore";
-import { data } from "framer-motion/client";
 
 type ChatState = {
   chats: Chat[];
@@ -11,7 +10,7 @@ type ChatState = {
 
   selectChat: (chatId: string) => void;
   createChat: (title: string) => string;
-  sendMessage: (text: string, role?: Role) => void;
+  sendMessage: (text: string, role?: Role) => Promise<void>;
   getSelectedChat: () => Chat | null;
   deleteChat: (chatId: string) => void;
   editChat: (chatId: string, newTitle: string) => void;
@@ -22,130 +21,120 @@ const setThinking = useUIStore.getState().setThinking;
 
 export const useChatStore = create<ChatState>()((set, get) => ({
   chats: initialChats,
-  selectedChatId: initialChats[0]?.id ?? null,
+  selectedChatId: null,
   messagesList: [],
-  noMessages: true, // ✅ al inicio, no hay mensajes visibles
+  noMessages: true,
 
   selectChat: (chatId) =>
     set((state) => {
       const chat = state.chats.find((c) => c.id === chatId);
-      const newMessages = chat?.messages ?? [];
+      const messages = chat?.messages ?? [];
       return {
         selectedChatId: chatId,
-        messagesList: newMessages,
-        noMessages: newMessages.length === 0,
+        messagesList: messages,
+        noMessages: messages.length === 0,
       };
     }),
 
   createChat: (title) => {
-    const id = crypto.randomUUID?.() ?? Math.random().toString(36).slice(2);
+    const id = crypto.randomUUID();
     const newChat: Chat = { id, title, messages: [] };
+
     set((state) => ({
       chats: [newChat, ...state.chats],
       selectedChatId: id,
       messagesList: [],
-      noMessages: true, // nuevo chat -> sin mensajes
+      noMessages: true,
     }));
+
     return id;
   },
 
- sendMessage: (text, role = "user") => {
-  const trimmed = text.trim();
-  if (!trimmed) return;
+  sendMessage: async (text, role = "user") => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
-  let chatId = get().selectedChatId;
-  if (!chatId) {
-    chatId = get().createChat(
-      trimmed.length > 20 ? trimmed.slice(0, 20) + "..." : trimmed
-    );
-  }
+    let chatId = get().selectedChatId;
+    if (!chatId) {
+      chatId = get().createChat(
+        trimmed.length > 20 ? trimmed.slice(0, 20) + "..." : trimmed
+      );
+    }
 
-  const newMsg: Message = {
-    id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2),
-    chatId,
-    role,
-    text: trimmed,
-    timestamp: Date.now(),
-  };
-
-  set((state) => {
-    // Actualizar el chat con el mensaje del usuario
-    const chats = state.chats.map((c) =>
-      c.id === chatId ? { ...c, messages: [...c.messages, newMsg] } : c
-    );
-
-    const isSelected = state.selectedChatId === chatId;
-    const messagesList = isSelected
-      ? [...state.messagesList, newMsg]
-      : state.messagesList;
-
-    return {
-      chats,
-      messagesList,
-      noMessages: messagesList.length === 0,
+    const userMsg: Message = {
+      id: crypto.randomUUID(),
+      chatId,
+      role,
+      text: trimmed,
+      timestamp: Date.now(),
     };
-  });
 
-  // Función asíncrona para manejar la respuesta de la API
-  const handleResponse = async () => {
+    // 1️⃣ agregar mensaje del usuario
+    set((state) => {
+      const chats = state.chats.map((c) =>
+        c.id === chatId ? { ...c, messages: [...c.messages, userMsg] } : c
+      );
+
+      return {
+        chats,
+        messagesList:
+          state.selectedChatId === chatId
+            ? [...state.messagesList, userMsg]
+            : state.messagesList,
+        noMessages: false,
+      };
+    });
+
+    // 2️⃣ fetch al backend
+    setThinking(true);
+
     try {
-      setThinking(true);
-      //fetch al backend
-      const response = await fetch(`${import.meta.env.REACT_APP_SERVER_URL}`, {
+      const chat = get().chats.find((c) => c.id === chatId);
+      if (!chat) return;
+
+      const response = await fetch("http://localhost:3000/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(get().getSelectedChat()?.messages ?? []),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(chat.messages),
       });
 
       if (!response.ok) {
-        throw new Error("Error en la respuesta del servidor");
+        throw new Error("Respuesta no OK del servidor");
       }
 
       const data = await response.json();
 
-      // Agregar la respuesta de la API como un nuevo mensaje del asistente
-      const responseMsg: Message = {
-        id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2),
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
         chatId,
         role: "assistant",
-        text: data.response, // Asumiendo que la respuesta de la API tiene un campo `response`
+        text: data.response,
         timestamp: Date.now(),
       };
 
-      // Actualizar el estado con la respuesta del asistente
+      // 3️⃣ agregar respuesta del assistant
       set((state) => {
         const chats = state.chats.map((c) =>
-          c.id === chatId ? { ...c, messages: [...c.messages, responseMsg] } : c
+          c.id === chatId
+            ? { ...c, messages: [...c.messages, assistantMsg] }
+            : c
         );
-
-        const isSelected = state.selectedChatId === chatId;
-        const messagesList = isSelected
-          ? [...state.messagesList, responseMsg]
-          : state.messagesList;
 
         return {
           chats,
-          messagesList,
-          noMessages: messagesList.length === 0,
+          messagesList:
+            state.selectedChatId === chatId
+              ? [...state.messagesList, assistantMsg]
+              : state.messagesList,
         };
       });
     } catch (error) {
-      console.error("Error sending message to server:", error);
+      console.error("Error enviando mensaje:", error);
     } finally {
+      // 🔴 ESTE ERA EL PUNTO CRÍTICO
       setThinking(false);
     }
-  };
-
-  // Llamar a la función asíncrona para manejar la respuesta
-  handleResponse();
-
-  // Opcional: tiempo de espera para terminar la animación de `thinking`
-  setTimeout(() => {
-    setThinking(false);
-  }, 2000);
-},
+  },
 
   getSelectedChat: () => {
     const { chats, selectedChatId } = get();
@@ -154,22 +143,18 @@ export const useChatStore = create<ChatState>()((set, get) => ({
 
   deleteChat: (chatId) =>
     set((state) => {
-      const updatedChats = state.chats.filter((c) => c.id !== chatId);
+      const chats = state.chats.filter((c) => c.id !== chatId);
+      const selectedChatId =
+        state.selectedChatId === chatId ? chats[0]?.id ?? null : state.selectedChatId;
 
-      const newSelectedId =
-        state.selectedChatId === chatId
-          ? updatedChats[0]?.id ?? null
-          : state.selectedChatId;
-
-      const newMessages = newSelectedId
-        ? updatedChats.find((c) => c.id === newSelectedId)?.messages ?? []
-        : [];
+      const messages =
+        chats.find((c) => c.id === selectedChatId)?.messages ?? [];
 
       return {
-        chats: updatedChats,
-        selectedChatId: newSelectedId,
-        messagesList: newMessages,
-        noMessages: newMessages.length === 0,
+        chats,
+        selectedChatId,
+        messagesList: messages,
+        noMessages: messages.length === 0,
       };
     }),
 
