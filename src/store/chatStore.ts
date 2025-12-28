@@ -52,7 +52,10 @@ export const useChatStore = create<ChatState>()((set, get) => ({
 
   sendMessage: async (text, role = "user") => {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed){
+      console.log("[sendMessage] texto vacío, abortando.");
+      return;
+    } 
 
     let chatId = get().selectedChatId;
     if (!chatId) {
@@ -85,19 +88,38 @@ export const useChatStore = create<ChatState>()((set, get) => ({
       };
     });
 
-    // 2️⃣ fetch al backend
+    // 2️⃣ agregar mensaje temporal del assistant
+    const tempAssistantMsg: Message = {
+      id: "assistant-thinking",
+      chatId,
+      role: "assistant",
+      text: "...",
+      timestamp: Date.now(),
+    };
+
+    set((state) => {
+      const chats = state.chats.map((c) =>
+        c.id === chatId ? { ...c, messages: [...c.messages, tempAssistantMsg] } : c
+      );
+      return {
+        chats,
+        messagesList:
+          state.selectedChatId === chatId
+            ? [...state.messagesList, tempAssistantMsg]
+            : state.messagesList,
+      };
+    });
+
     setThinking(true);
 
     try {
       const chat = get().chats.find((c) => c.id === chatId);
       if (!chat) return;
-
       const response = await fetch("http://localhost:3000/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(chat.messages),
       });
-
       if (!response.ok) {
         throw new Error("Respuesta no OK del servidor");
       }
@@ -112,26 +134,38 @@ export const useChatStore = create<ChatState>()((set, get) => ({
         timestamp: Date.now(),
       };
 
-      // 3️⃣ agregar respuesta del assistant
+      // 3️⃣ reemplazar el mensaje temporal por la respuesta real
       set((state) => {
-        const chats = state.chats.map((c) =>
-          c.id === chatId
-            ? { ...c, messages: [...c.messages, assistantMsg] }
-            : c
-        );
-
+        const chats = state.chats.map((c) => {
+          if (c.id !== chatId) return c;
+          // Reemplaza el último mensaje assistant si es el temporal
+          const msgs = [...c.messages];
+          if (msgs.length && msgs[msgs.length - 1].id === "assistant-thinking") {
+            msgs[msgs.length - 1] = assistantMsg;
+          } else {
+            msgs.push(assistantMsg);
+          }
+          return { ...c, messages: msgs };
+        });
         return {
           chats,
           messagesList:
             state.selectedChatId === chatId
-              ? [...state.messagesList, assistantMsg]
+              ? (() => {
+                  const msgs = [...state.messagesList];
+                  if (msgs.length && msgs[msgs.length - 1].id === "assistant-thinking") {
+                    msgs[msgs.length - 1] = assistantMsg;
+                  } else {
+                    msgs.push(assistantMsg);
+                  }
+                  return msgs;
+                })()
               : state.messagesList,
         };
       });
     } catch (error) {
       console.error("Error enviando mensaje:", error);
     } finally {
-      // 🔴 ESTE ERA EL PUNTO CRÍTICO
       setThinking(false);
     }
   },

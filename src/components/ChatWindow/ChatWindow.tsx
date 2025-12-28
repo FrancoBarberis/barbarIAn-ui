@@ -21,12 +21,13 @@ export default function ChatWindow({ messagesList }: ChatWindowProps) {
 
   return (
     <div className={styles.chatWindow}>
-      {messagesList.map((msg) => (
+      {messagesList.map((msg, idx) => (
         <Message
           key={msg.id ?? `${msg.role}-${msg.timestamp ?? Math.random()}`}
           text={msg.text}
           role={msg.role}
           timestamp={msg.timestamp}
+          isLast={idx === messagesList.length - 1}
         />
       ))}
 
