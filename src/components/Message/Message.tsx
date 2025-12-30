@@ -19,7 +19,22 @@ const Message: React.FC<MessageProps> = ({ text, role, timestamp }) => {
     hour12: false,
   });
 
-  return (
+  return text === "..." ? (
+    <motion.div
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      style={{
+        alignSelf: "flex-end",
+        paddingRight: "10%",
+        marginTop: "4px",
+        marginBottom: "4px",
+      }}
+    >
+      <CircularProgress size="md" color="neutral" />
+    </motion.div>
+  ) : (
     <MessageCard
       layout
       initial={{ opacity: 0, y: 20 }}
@@ -44,14 +59,7 @@ const Message: React.FC<MessageProps> = ({ text, role, timestamp }) => {
       }}
       className={clsx(styles.message)}
     >
-      <p className={styles.message_text}>
-        {text === "" ? (
-          <CircularProgress size="sm" variant="soft" color="neutral" />
-        ) : (
-          text
-        )}
-      </p>
-
+      <p className={styles.message_text}>{text}</p>
       <span
         style={{
           alignSelf: role === "assistant" ? "flex-end" : "flex-start",
