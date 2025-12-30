@@ -3,6 +3,7 @@ import styles from "./ChatWindow.module.css";
 import Message from "../Message/Message";
 import type { Message as MessageType } from "../../types/messageType";
 import { useEffect, useRef } from "react";
+import { useChatStore } from "../../store/chatStore";
 
 interface ChatWindowProps {
   messagesList: MessageType[];
@@ -10,6 +11,10 @@ interface ChatWindowProps {
 
 export default function ChatWindow({ messagesList }: ChatWindowProps) {
   const endRef = useRef<HTMLDivElement | null>(null);
+  const chatTitle = useChatStore((state) => {
+    const selectedChat = state.getSelectedChat();
+    return selectedChat ? selectedChat.title : "Chat";
+  });
 
   useEffect(() => {
     // Esperar al siguiente frame para asegurar que el DOM ya se renderizó
@@ -21,6 +26,7 @@ export default function ChatWindow({ messagesList }: ChatWindowProps) {
 
   return (
     <div className={styles.chatWindow}>
+      <h2 className={styles.chatTitle}>{messagesList.length === 0 ? "" : chatTitle}</h2>
       {messagesList.map((msg, idx) => (
         <Message
           key={msg.id ?? `${msg.role}-${msg.timestamp ?? Math.random()}`}

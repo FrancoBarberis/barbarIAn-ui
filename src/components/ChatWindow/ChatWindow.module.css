@@ -12,6 +12,13 @@
     height: 100%;
 }
 
+.chatTitle {
+    color: white;
+    text-align: center;
+    margin-bottom: 5%;
+    font-size: 2em;
+}
+
 .chatWindow::-webkit-scrollbar {
     width: 10px;
 }

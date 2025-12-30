@@ -24,17 +24,16 @@ const Message: React.FC<MessageProps> = ({ text, role, timestamp }) => {
         display: "flex",
         flexDirection: "column",
         minWidth: "20%",
-        backgroundColor: role === "assistant" ? "blue" : "green",
+        backgroundColor: role === "assistant" ? "gray" : "green",
         color: "black",
         alignSelf: role === "assistant" ? "flex-end" : "flex-start",
-        textAlign: role === "assistant" ? "right" : "left",
         marginRight: role === "assistant" ? "2%" : "0",
         marginLeft: role === "user" ? "2%" : "0",
       }}
       className={clsx(styles.message)}
     >
       <p className={styles.message_text}>{text}</p>
-      <p className={styles.timestamp}>{formattedTime}</p>
+      <span style={{alignSelf: role === "assistant" ? "flex-end" : "flex-start"}}>{formattedTime}</span>
     </Card>
   );
 };
