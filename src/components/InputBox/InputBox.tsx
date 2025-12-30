@@ -3,20 +3,18 @@ import styles from "./InputBox.module.css";
 import { useChatStore } from "../../store/chatStore";
 import SendIcon from "../../assets/send.png";
 import clsx from "clsx";
+import Input from "@mui/joy/Input";
+import Button from "@mui/joy/Button";
+import Box from "@mui/joy/Box";
 
 const InputBox: React.FC = () => {
-
-  const messagesList = useChatStore((s) => s.messagesList)
-  const noMessages = useChatStore((s)=> s.noMessages)
-
-
+  const noMessages = useChatStore((s) => s.noMessages);
   const [message, setMessage] = useState("");
   const selectedChatId = useChatStore((s) => s.selectedChatId);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const waitingForResponse = false; // Placeholder for future use
 
-  // Cuando cambia el chat seleccionado, enfocar el input
   useEffect(() => {
     inputRef.current?.focus();
   }, [selectedChatId]);
@@ -27,7 +25,6 @@ const InputBox: React.FC = () => {
   };
 
   return (
-    //TODO: Revisar que el texto no se ponga detras del boton cuando es un parrafo muy largo
     <form
       className={clsx(styles.inputBox, noMessages && styles.no__messages)}
       onSubmit={(e) => {
@@ -35,29 +32,60 @@ const InputBox: React.FC = () => {
         submit();
       }}
     >
-      <input
-        ref={inputRef}
-        type="text"
-        name="message_input"
-        placeholder="Type your message..."
-        className={styles.inputField}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            submit();
-          }
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          border: "1px solid #ccc",
+          width: "90%",
+          borderRadius: "24px",
+          overflow: "hidden",
         }}
-        autoComplete="off"
-      />
-      <button
-        className={styles.sendButton}
-        type="submit"
-        disabled={!message.trim()}
       >
-        <img src={SendIcon} alt="send icon" loading="eager" className={styles.imgSendIcon} />
-      </button>
+        <Input
+          color="primary"
+          size="md"
+          variant="soft"
+          ref={inputRef}
+          type="text"
+          name="message_input"
+          placeholder="Type your message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              submit();
+            }
+          }}
+          autoComplete="off"
+          sx={{
+            flexGrow: 1,
+            borderRadius: "24px 0 0 24px",
+            padding: "0 16px",
+          }}
+        />
+        <Button
+          type="submit"
+          disabled={!message.trim()}
+          sx={{
+            borderRadius: "0 24px 24px 0",
+            minWidth: "auto",
+            padding: "0 16px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+          }}
+        >
+          <img
+            src={SendIcon}
+            alt="send icon"
+            loading="eager"
+            className={styles.imgSendIcon}
+          />
+        </Button>
+      </Box>
     </form>
   );
 };
