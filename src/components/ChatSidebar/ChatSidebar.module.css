@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: fixed;
-    background: linear-gradient(to bottom, #3C6F79, #803707);
+    background-color: #3C6F79;
     width: 240px;
     height: 100%;
     transition: all .3s;

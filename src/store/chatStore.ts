@@ -137,7 +137,7 @@ export const useChatStore = create<ChatState>()((set, get) => ({
         id: crypto.randomUUID(),
         chatId,
         role: "assistant",
-        text: "Error al obtener respuesta",
+        text: "Error al obtener respuesta del servidor. Intenta de nuevo más tarde.",
         timestamp: Date.now(),
       };
 

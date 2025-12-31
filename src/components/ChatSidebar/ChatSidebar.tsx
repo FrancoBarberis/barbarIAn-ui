@@ -19,7 +19,7 @@ const ChatSidebar: React.FC = () => {
 
   return (
     <aside
-      className={clsx(styles.chatSidebar, collapsed && styles.collapsed)}
+      className={clsx(styles.chatSidebar, collapsed && styles.collapsed, chats.length === 0 && styles.hidden)}
       onMouseEnter={() => setCollapsed(false)}
       onMouseLeave={() => setCollapsed(true)}
     >
