@@ -16,6 +16,7 @@ const InputBox: React.FC = () => {
   const selectedChatId = useChatStore((s) => s.selectedChatId);
   const sendMessage = useChatStore((s) => s.sendMessage);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const suggestions: string[] = ["¿En qué piensas?", "¿Cómo estás?", "Cuéntame un chiste"]; 
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -27,8 +28,10 @@ const InputBox: React.FC = () => {
   };
 
   return (
-    <form
-      className={clsx(styles.inputBox, noMessages && styles.no__messages)}
+    <div className={clsx(styles.container, noMessages && styles.no__messages)}>
+      <h2 className={clsx(styles.suggestions, !noMessages && styles.hidden)}>Sugerencias</h2>
+      <form
+      className={clsx(styles.inputBox,)}
       onSubmit={(e) => {
         e.preventDefault();
         submit();
@@ -89,6 +92,8 @@ const InputBox: React.FC = () => {
         </Button>
       </Box>
     </form>
+    </div>
+    
   );
 };
 
