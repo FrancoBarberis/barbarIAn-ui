@@ -7,7 +7,7 @@
     min-width: 100%;     /* 🔥 puede encogerse */
 
     padding-top: 3vh;
-    background-color: #414131;
+    background: var(--primary-color);
     gap: 10px;
 
     overflow-y: auto;
@@ -16,7 +16,7 @@
 }
 
 .chatTitle {
-    color: white;
+    color: var(--text-color);
     text-align: center;
     margin-bottom: 5%;
     font-size: 2em;
@@ -27,12 +27,12 @@
 }
 
 .chatWindow::-webkit-scrollbar-track {
-    background-color: gray;
+    background-color: var(--scrollbar-track);
 
 }
 
 .chatWindow::-webkit-scrollbar-thumb {
-    background-color: #803707;
+    background-color: var(--scrollbar-thumb);
 }
 
 .no__messages {

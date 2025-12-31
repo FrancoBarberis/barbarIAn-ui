@@ -6,6 +6,7 @@
     /* PALETA SEGÚN LA ILUSTRACIÓN */
     --primary-color: #38606c;         /* fondo azul verdoso */
     --secondary-color: #25434c;       /* azul verdoso más oscuro */
+    --primary-darker: #526a71;       /* azul verdoso muy oscuro */
     --accent-color: #e26a3a;          /* rojo quemado/camiseta */
     --border-color: #e7c98a;          /* beige/ocre (cuernos, detalles) */
     --border-width: 1px;
@@ -14,7 +15,7 @@
     --text-secondary: #e7c98a;        /* beige/ocre */
     --button-color: #e26a3a;          /* rojo quemado */
     --button-hover: #e7c98a;          /* beige/ocre */
-    --scrollbar-thumb: #e26a3a;       /* rojo quemado */
+    --scrollbar-thumb: hsl(17, 56%, 54%);       /* rojo quemado */
     --scrollbar-track: #25434c;       /* azul verdoso más oscuro */
     --user-message: #e26a3a;          /* rojo quemado */
     --ai-message: #38606c;            /* azul verdoso fondo */

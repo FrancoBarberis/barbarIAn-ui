@@ -1,7 +1,7 @@
 .inputBox {
     position: absolute;
     bottom: 0;
-    background-color: #803707;
+    background-color: var(--primary-darker);
     width: 100%;
     height: var(--input-box-height);
     min-height: 13vh;
