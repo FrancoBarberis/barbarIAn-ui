@@ -3,6 +3,46 @@ import { create } from "zustand";
 import type { Chat, Message, Role } from "../types/messageType";
 import { useUIStore } from "./uiStore";
 
+// Helpers de Local Storage
+const LS_KEYS = {
+  chats: "chats",
+  selectedChatId: "selectedChatId",
+} as const;
+
+function readChatsFromLS(): Chat[] {
+  try {
+    const raw = localStorage.getItem(LS_KEYS.chats);
+    return raw ? (JSON.parse(raw) as Chat[]) : [];
+  } catch {
+    // Si el JSON está corrupto, volvemos a []
+    return [];
+  }
+}
+
+function saveChatsToLS(chats: Chat[]) {
+  localStorage.setItem(LS_KEYS.chats, JSON.stringify(chats));
+}
+
+function readSelectedIdFromLS(): string | null {
+  return localStorage.getItem(LS_KEYS.selectedChatId);
+}
+
+function saveSelectedIdToLS(id: string | null) {
+  if (id) localStorage.setItem(LS_KEYS.selectedChatId, id);
+  else localStorage.removeItem(LS_KEYS.selectedChatId);
+}
+
+// Hidratar estado inicial desde LS
+const initialChats: Chat[] = readChatsFromLS();
+const initialSelectedId: string | null =
+  readSelectedIdFromLS() ?? initialChats[0]?.id ?? null;
+const initialMessages =
+  initialSelectedId
+    ? initialChats.find((c) => c.id === initialSelectedId)?.messages ?? []
+    : [];
+
+const setThinking = useUIStore.getState().setThinking;
+
 type ChatState = {
   chats: Chat[];
   selectedChatId: string | null;
@@ -17,19 +57,17 @@ type ChatState = {
   editChat: (chatId: string, newTitle: string) => void;
 };
 
-const initialChats: Chat[] = [];
-const setThinking = useUIStore.getState().setThinking;
-
 export const useChatStore = create<ChatState>()((set, get) => ({
   chats: initialChats,
-  selectedChatId: initialChats[0]?.id ?? null,
-  messagesList: [],
-  noMessages: true, // ✅ al inicio, no hay mensajes visibles
+  selectedChatId: initialSelectedId,
+  messagesList: initialMessages,
+  noMessages: initialMessages.length === 0,
 
   selectChat: (chatId) =>
     set((state) => {
       const chat = state.chats.find((c) => c.id === chatId);
       const newMessages = chat?.messages ?? [];
+      saveSelectedIdToLS(chatId);
       return {
         selectedChatId: chatId,
         messagesList: newMessages,
@@ -40,25 +78,34 @@ export const useChatStore = create<ChatState>()((set, get) => ({
   createChat: (title) => {
     const id = crypto.randomUUID?.() ?? Math.random().toString(36).slice(2);
     const newChat: Chat = { id, title, messages: [] };
-    set((state) => ({
-      chats: [newChat, ...state.chats],
-      selectedChatId: id,
-      messagesList: [],
-      noMessages: true, // nuevo chat -> sin mensajes
-    }));
+
+    set((state) => {
+      const updatedChats = [newChat, ...state.chats];
+      saveChatsToLS(updatedChats);
+      saveSelectedIdToLS(id);
+
+      return {
+        chats: updatedChats,
+        selectedChatId: id,
+        messagesList: [],
+        noMessages: true, // nuevo chat -> sin mensajes
+      };
+    });
+
     return id;
   },
 
+  // Usar este método tanto para "enviar" (role: 'user') como para "recibir" (role: 'assistant')
   sendMessage: (text, role = "user") => {
     const trimmed = text.trim();
     if (!trimmed) return;
 
     let chatId = get().selectedChatId;
     if (!chatId) {
-      chatId =
-        get().createChat(
-          trimmed.length > 20 ? trimmed.slice(0, 20) + "..." : trimmed
-        );
+      // crear chat con título corto derivado del primer mensaje
+      chatId = get().createChat(
+        trimmed.length > 20 ? trimmed.slice(0, 20) + "..." : trimmed
+      );
     }
 
     const newMsg: Message = {
@@ -72,21 +119,24 @@ export const useChatStore = create<ChatState>()((set, get) => ({
     setThinking(true);
 
     set((state) => {
-      // Actualizar el chat con el mensaje
-      const chats = state.chats.map((c) =>
+      // Actualizar el chat con el nuevo mensaje
+      const updatedChats = state.chats.map((c) =>
         c.id === chatId ? { ...c, messages: [...c.messages, newMsg] } : c
       );
 
-      // Si el mensaje es para el chat seleccionado, reflejarlo en la lista visible
+      // ✅ Persistir en Local Storage
+      saveChatsToLS(updatedChats);
+
+      // Reflejar en la lista visible si es el chat seleccionado
       const isSelected = state.selectedChatId === chatId;
-      const messagesList = isSelected
+      const updatedMessagesList = isSelected
         ? [...state.messagesList, newMsg]
         : state.messagesList;
 
       return {
-        chats,
-        messagesList,
-        noMessages: messagesList.length === 0,
+        chats: updatedChats,
+        messagesList: updatedMessagesList,
+        noMessages: updatedMessagesList.length === 0,
       };
     });
 
@@ -114,6 +164,10 @@ export const useChatStore = create<ChatState>()((set, get) => ({
           ? updatedChats.find((c) => c.id === newSelectedId)?.messages ?? []
           : [];
 
+      // ✅ Persistir cambios
+      saveChatsToLS(updatedChats);
+      saveSelectedIdToLS(newSelectedId);
+
       return {
         chats: updatedChats,
         selectedChatId: newSelectedId,
@@ -123,10 +177,14 @@ export const useChatStore = create<ChatState>()((set, get) => ({
     }),
 
   editChat: (chatId, newTitle) =>
-    set((state) => ({
-      chats: state.chats.map((c) =>
+    set((state) => {
+      const updatedChats = state.chats.map((c) =>
         c.id === chatId ? { ...c, title: newTitle } : c
-      ),
-    })),
+      );
+
+      // ✅ Persistir cambios
+      saveChatsToLS(updatedChats);
+
+      return { chats: updatedChats };
+    }),
 }));
-``
