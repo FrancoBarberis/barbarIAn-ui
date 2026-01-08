@@ -2,8 +2,8 @@
 // src/components/AgentPreview/AgentPreview.tsx
 import React from "react";
 import styles from "./AgentPreview.module.css";
-import AgentIdleIMG from "../../assets/idle.jpg";
-import AgentThinkingIMG from "../../assets/thinking.jpg";
+import AgentIdleIMG from "../../assets/idle.png";
+import AgentThinkingIMG from "../../assets/thinking.png";
 import { useUIStore } from "../../store/uiStore";
 
 const AgentPreview: React.FC = () => {

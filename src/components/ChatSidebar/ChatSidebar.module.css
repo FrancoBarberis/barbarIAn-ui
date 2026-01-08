@@ -112,7 +112,7 @@ TODO: Fix ellipsis */
     /* para alinear título y preview */
     flex-direction: row;
     /* título arriba, preview abajo */
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 90%;
     height: 60px;
