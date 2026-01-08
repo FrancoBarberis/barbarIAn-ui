@@ -135,7 +135,11 @@ TODO: Fix ellipsis */
 .controlsWrapper{
     display: flex;
     flex-direction: row;
-    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 5px;
+    margin-right: 2px;
 }
 
 .chatControl{
@@ -146,8 +150,9 @@ TODO: Fix ellipsis */
     cursor:pointer;
     opacity: 0;
     transition: all .3s;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
 }
 
 .chat:hover .chatControl{
@@ -171,9 +176,4 @@ TODO: Fix ellipsis */
 .chat.active:hover{
     filter: brightness(1.3);
     background-color: #bb662e;
-}
-
-.message {
-    transition: all ease-in-out 1s;
-    opacity: 1;
 }

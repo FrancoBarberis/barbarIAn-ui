@@ -83,8 +83,6 @@ const ChatSidebar: React.FC = () => {
                     >
                       <img src={editIcon} alt="pencil" className={styles.button__icon} />
                     </button>
-                  </div>
-                  <div>
                     <button
                       className={styles.chatControl}
                       onClick={(e) => {
