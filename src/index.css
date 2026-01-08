@@ -18,7 +18,7 @@
     --scrollbar-thumb: hsl(17, 56%, 54%);       /* rojo quemado */
     --scrollbar-track: #25434c;       /* azul verdoso más oscuro */
     --user-message: #e26a3a;          /* rojo quemado */
-    --ai-message: #38606c;            /* azul verdoso fondo */
+    --ai-message: #62909e;            /* azul verdoso fondo */
 }
 
 @font-face {

@@ -51,11 +51,12 @@ const Message: React.FC<MessageProps> = ({ text, role, timestamp }) => {
         width: "fit-content",
         maxWidth: "50%",
         padding: "10px 16px",
-        backgroundColor: role === "assistant" ? "gray" : "green",
+        backgroundColor: role === "assistant" ? "var(--ai-message)" : "var(--user-message)",
         color: "black",
         alignSelf: role === "assistant" ? "flex-end" : "flex-start",
         marginRight: role === "assistant" ? "2%" : "0",
         marginLeft: role === "user" ? "2%" : "0",
+        boxShadow: "0 4px 20px rgba(0,0,0,.7)",
       }}
       className={clsx(styles.message)}
     >
