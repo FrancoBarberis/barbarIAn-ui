@@ -32,7 +32,7 @@ const Message: React.FC<MessageProps> = ({ text, role, timestamp }) => {
         marginBottom: "4px",
       }}
     >
-      <CircularProgress size="md" color="neutral" />
+      <CircularProgress size="md" color="primary" />
     </motion.div>
   ) : (
     <MessageCard

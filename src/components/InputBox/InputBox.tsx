@@ -74,7 +74,7 @@ const InputBox: React.FC = () => {
           sx={{
             borderRadius: "0 5px 5px 0",
             minWidth: "auto",
-            backgroundColor: "#007bff",
+            backgroundColor: "var(--accent-color)",
             color: "#fff",
             border: "none",
           }}
