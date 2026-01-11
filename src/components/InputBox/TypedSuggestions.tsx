@@ -9,9 +9,10 @@ const TypedTitle: React.FC = () => {
     const typed = new Typed(el.current!, {
       strings: ["¿En qué piensas?", "¿Cómo estás?", "Cuéntame un chiste"],
       startDelay: 100,
-      typeSpeed: 100,
-      backSpeed: 100,
-      backDelay: 1000,
+      typeSpeed: 30,
+      backSpeed: 30,
+      backDelay: 2000,
+      showCursor: false,
       loop: true,
     });
 
